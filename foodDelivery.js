@@ -1,35 +1,52 @@
-const deliveringOrder = () => {
-  console.log(Date.now(), "Delivering order...");
-  console.log(Date.now(), "Order delivered: ", {
-    orderId: 123,
-    foodDetails: "Burger & Fries",
-    packageDetails: "Packed in eco-friendly box",
-    deliveryDetails: "Delivered by John at 7:30 PM",
-  });
+const timeStamping = (startTime) => {
+  return ((Date.now() - startTime) / 1000).toFixed(2);
 };
 
-const packingOrder = () => {
-  console.log(Date.now(), "Packing order...");
-  console.log(Date.now(), "Order packed: ", {
-    orderId: 123,
-    foodDetails: "Burger & Fries",
-    packageDetails: "Packed in eco-friendly box",
-  });
+const display = (time, msg, order = "") => {
+  console.log(time, msg, order);
 };
 
-const preparingFood = () => {
-  console.log(Date.now(), "Preparing food...");
-  console.log(Date.now(), "Food is ready:", {
-    orderId: 123,
-    foodDetails: "Burger & Fries",
-  });
+const deliveringOrder = (order, startTime) => {
+  setTimeout(() => {
+    const time = timeStamping(startTime);
+    const msg = "Order delivered: ";
+    order["deliveryDetails"] = "Delivered by John at 7:30 PM";
+    display(time, msg, order);
+  }, 5000);
 };
 
-const orderRecieved = function (order) {
-  const orderId = "123";
-  setInterval(preparingFood, 3000);
-  setInterval(packingOrder, 2000);
-  setInterval(deliveringOrder, 5000);
+const packingOrder = (order, startTime) => {
+  setTimeout(() => {
+    const time = timeStamping(startTime);
+    const msg = "order packed :";
+    order["packageDetails"] = "Packed in eco-friendly box";
+    display(time, msg, order);
+    display(timeStamping(startTime), "Delivery order....");
+    deliveringOrder(order, startTime);
+  }, 2000);
 };
 
-orderRecieved();
+const preparingFood = (order, startTime) => {
+  display(timeStamping(startTime), "Preparing food...");
+
+  setTimeout(() => {
+    const time = timeStamping(startTime);
+    const msg = "Food is ready : ";
+    order["foodDetails"] = "Burger & Fries";
+    display(time, msg, order);
+    display(timeStamping(startTime), "Packing order...");
+    packingOrder(order, startTime);
+  }, 3000);
+};
+
+const orderRecieved = function (startTime) {
+  display(timeStamping(startTime), "Order received: ", { orderId: 123 });
+  preparingFood({ orderId: 123 }, startTime);
+};
+
+const main = () => {
+  const startTime = Date.now();
+  orderRecieved(startTime);
+};
+
+main();
