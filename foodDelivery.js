@@ -7,13 +7,15 @@ const display = (time, msg, order = "") => {
 };
 
 const deliveringOrder = (order, startTime) => {
-    display(timeStamping(startTime), "Delivery order....");
+  display(timeStamping(startTime), "Delivery order....");
+  
   setTimeout(() => {
     const time = timeStamping(startTime);
     const msg = "Order delivered: ";
     order["deliveryDetails"] = "Delivered by John at 7:30 PM";
     display(time, msg, order);
   }, 5000);
+  
 };
 
 const packingOrder = (order, startTime) => {

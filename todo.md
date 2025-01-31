@@ -1,4 +1,8 @@
 what is contract?
+✔ Receive **data from the previous step**  
+✔ Modify the data and pass it forward  
+✔ Log the **time elapsed from order placement**
+
  - use and implement setInterval and Date.Now()
  - main function 
     - orderRecieved function
